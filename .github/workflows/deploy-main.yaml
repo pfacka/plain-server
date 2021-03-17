@@ -1,0 +1,20 @@
+name: bi-dwh-management-workflow
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build & Publish & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: pfacka/plain-server/plain-server
+          tag_with_ref: true
